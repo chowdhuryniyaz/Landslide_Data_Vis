@@ -9,3 +9,4 @@ df = load(path)
 df = changeDataType(df)
 
 print(df.head())
+print(df.dtypes)

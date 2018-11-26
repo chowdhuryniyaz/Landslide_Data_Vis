@@ -4,15 +4,14 @@ import numpy as np
 
 def load(file_path):
     column_names = ['id', 'date', 'time', 'continent_code', 'country_name', 'country_code',
-                    'state_or_province', 'population', 'city_or_town', 'distance', 'location',
-                    'latitude', 'longitude', 'geolocation', 'type_of_hazard', 'type_of_landslide',
-                    'size_of_landslide', 'cause_of_landslide', 'storm_name', 'injuries', 'fatalities',
-                    'source_name', 'source_link']
+    'state_or_province', 'population', 'city_or_town', 'distance', 'type_of_area',
+    'latitude', 'longitude', 'geolocation', 'type_of_hazard', 'type_of_landslide',
+    'size_of_landslide', 'cause_of_landslide', 'storm_name', 'injuries', 'fatalities',
+    'source_name', 'source_link']
 
     df = pd.read_csv(file_path, index_col = 0 , names = column_names, skiprows = 1)
 
-    to_drop = ['time', 'continent_code', 'location', 'latitude', 'longitude',
-                'type_of_hazard', 'storm_name', 'source_name', 'source_link']
+    to_drop = ['time', 'continent_code', 'latitude', 'longitude', 'geolocation', 'type_of_hazard', 'storm_name', 'source_name', 'source_link']
 
     df = dropColumn(df, to_drop)
 
@@ -33,9 +32,12 @@ def changeDataType(df):
 
     df['distance'] = df['distance'].round(3)
 
+    area_types = CategoricalDtype(ordered = False, categories = ['Above river', 'Above road', 'Below road', 'Bluff', 'Burned area', 'Deforested slope',
+                        'Mine construction', 'Natural slope', 'Other', 'Retaining wall' , 'Unknown', 'Urban area'])
+    df['type_of_area'] = df['type_of_area'].fillna('Unknown').astype(area_types)
+
     landslide_types = CategoricalDtype(ordered = False, categories = ['Landslide', 'Riverbank collapse', 'Mudslide', 'Complex', 'Debris flow',
-                        'Rockfall', 'Lahar', 'Creep', 'Avalanche', 'Other',
-                        'Unknown', 'Rockslide'])
+                        'Rockfall', 'Lahar', 'Creep', 'Avalanche', 'Other', 'Unknown', 'Rockslide'])
     df['type_of_landslide'] = df['type_of_landslide'].fillna('Unknown').astype(landslide_types)
 
     landslide_sizes = CategoricalDtype(ordered = False, categories = ['Small', 'Medium', 'Large', 'Very_large'])
