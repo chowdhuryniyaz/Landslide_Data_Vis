@@ -29,6 +29,18 @@ def dropColumn(df, columns):
     return df
 
 def changeDataType(df):
+    df['date'] = pd.to_datetime(df['date'])
+
+    df['distance'] = df['distance'].round(3)
+
+    landslide_types = CategoricalDtype(ordered = False, categories = ['Landslide', 'Riverbank collapse', 'Mudslide', 'Complex', 'Debris flow',
+                        'Rockfall', 'Lahar', 'Creep', 'Avalanche', 'Other',
+                        'Unknown', 'Rockslide'])
+    df['type_of_landslide'] = df['type_of_landslide'].fillna('Unknown').astype(landslide_types)
+
+    landslide_sizes = CategoricalDtype(ordered = False, categories = ['Small', 'Medium', 'Large', 'Very_large'])
+    df['size_of_landslide'] = df['size_of_landslide'].fillna('Unknown').astype(landslide_sizes)
+
     df['injuries'] = df['injuries'].fillna(0.0).astype(np.int64)
 
     df['fatalities'] = df['fatalities'].fillna(0.0).astype(np.int64)
