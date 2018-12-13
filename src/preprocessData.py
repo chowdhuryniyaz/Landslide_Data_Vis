@@ -30,7 +30,7 @@ def dropColumn(df, columns):
 def changeDataType(df):
     df['date'] = pd.to_datetime(df['date'])
 
-    df['distance'] = df['distance'].round(3)
+    df['distance'] = df['distance'].fillna(0.000).round(3).astype(np.float64)
 
     area_types = CategoricalDtype(ordered = False, categories = ['Above river', 'Above road', 'Below road', 'Bluff', 'Burned area', 'Deforested slope',
                         'Mine construction', 'Natural slope', 'Other', 'Retaining wall' , 'Unknown', 'Urban area'])
@@ -40,8 +40,8 @@ def changeDataType(df):
                         'Rockfall', 'Lahar', 'Creep', 'Avalanche', 'Other', 'Unknown', 'Rockslide'])
     df['type_of_landslide'] = df['type_of_landslide'].fillna('Unknown').astype(landslide_types)
 
-    landslide_sizes = CategoricalDtype(ordered = False, categories = ['Small', 'Medium', 'Large', 'Very_large'])
-    df['size_of_landslide'] = df['size_of_landslide'].fillna('Unknown').astype(landslide_sizes)
+    landslide_sizes = CategoricalDtype(ordered = False, categories = ['Small', 'Medium', 'Large', 'Very Large'])
+    df['size_of_landslide'] = df['size_of_landslide'].fillna('Unknown').map({'Small': 'Small', 'Medium': 'Medium', 'Large': 'Large', 'Very_large': 'Very Large'}).astype(landslide_sizes)
 
     landslide_causes = CategoricalDtype(ordered = False, categories = ['Construction', 'Continuous rain', 'Dam embankment collapse', 'Downpour',
                             'Earthquake', 'Flooding', 'Freeze thaw', 'Mining digging', 'Other', 'Rain', 'Snowfall snowmelt', 'Tropical cyclone', 'Unknown', 'Volcano'])

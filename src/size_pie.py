@@ -9,9 +9,9 @@ pd.set_option('display.max_columns', 13)
 df = load(path)
 df = changeDataType(df)
 
-df.cause_of_landslide.cat.remove_categories(['Flooding', 'Earthquake', 'Mining digging', 'Freeze thaw', 'Construction', 'Other', 'Volcano', 'Dam embankment collapse'], inplace = True)
+#df.cause_of_landslide.cat.remove_categories(['Flooding', 'Earthquake', 'Mining digging', 'Freeze thaw', 'Construction', 'Other', 'Volcano', 'Dam embankment collapse'], inplace = True)
 
-count = df['cause_of_landslide'].value_counts(sort = True)
+count = df['size_of_landslide'].value_counts(sort = True)
 percent = round((count / count.sum()) * 100, 2)
 
 colours = [plt.cm.PuRd(x)
@@ -28,9 +28,9 @@ for i in percent:
 
 fig, ax = plt.subplots()
 
-plt.pie(count, colors = colours, startangle = 90, explode = explode, autopct = '%.0f%%', labels = df['cause_of_landslide'].cat.categories)
-plt.legend(df['cause_of_landslide'].cat.categories, bbox_to_anchor=(1.15, 0.8), loc="center left", frameon=False)
-plt.text(-2, 1.08, "Different causes of landslides")
+plt.pie(count, colors = colours, startangle = 90, explode = explode, autopct = '%.0f%%', labels = df['size_of_landslide'].cat.categories)
+plt.legend(df['size_of_landslide'].cat.categories, bbox_to_anchor=(1.15, 0.8), loc="center left", frameon=False)
+plt.text(-2, 1.08, "Different sizes of landslides")
 plt.tight_layout()
 
 #   Found code from: https://python-graph-gallery.com/160-basic-donut-plot/

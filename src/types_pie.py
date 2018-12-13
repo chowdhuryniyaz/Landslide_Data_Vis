@@ -19,7 +19,6 @@ colours = [plt.cm.PuRd(x)
                 (0.27 + i * 0.6/count.nunique()
                 for i in range(count.nunique()))]
 
-print(percent)
 explode = []
 for i in percent:
     if i <= 10:
