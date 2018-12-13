@@ -43,6 +43,10 @@ def changeDataType(df):
     landslide_sizes = CategoricalDtype(ordered = False, categories = ['Small', 'Medium', 'Large', 'Very_large'])
     df['size_of_landslide'] = df['size_of_landslide'].fillna('Unknown').astype(landslide_sizes)
 
+    landslide_causes = CategoricalDtype(ordered = False, categories = ['Construction', 'Continuous rain', 'Dam embankment collapse', 'Downpour',
+                            'Earthquake', 'Flooding', 'Freeze thaw', 'Mining digging', 'Other', 'Rain', 'Snowfall snowmelt', 'Tropical cyclone', 'Unknown', 'Volcano'])
+    df['cause_of_landslide'] = df['cause_of_landslide'].fillna('Unknown').astype(landslide_causes)
+
     df['injuries'] = df['injuries'].fillna(0.0).astype(np.int64)
 
     df['fatalities'] = df['fatalities'].fillna(0.0).astype(np.int64)
