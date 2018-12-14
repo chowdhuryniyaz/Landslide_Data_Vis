@@ -9,16 +9,19 @@ pd.set_option('display.max_columns', 13)
 df = load(path)
 df = changeDataType(df)
 
-count = df['date'].groupby(df.date.dt.year).agg('count')
+df = df[(df.date.dt.year == 2010) & (df['country_name'] == 'United States')]
+count = df['state_or_province'].value_counts(sort = True, ascending = True)
+percent = round((count / count.sum()) * 100, 2)
+print(percent)
 
 fig, ax = plt.subplots()
 
-count.plot(kind = 'barh', ax = ax, color = [plt.cm.PuRd(x)
+percent.plot(kind = 'barh', ax = ax, color = [plt.cm.PuRd(x)
                                             for x in
                                                 (0.27 + i * 1/count.nunique()
                                                 for i in range(count.nunique()))], rot = 0)
-ax.set_xlabel('Frequency')
-ax.set_ylabel('Year')
-plt.title("Number of landslide events in a year", pad=20, weight='heavy')
+ax.set_xlabel('Percent')
+ax.set_ylabel('State')
+plt.title("Percentage of landslide events per state in the US in 2010", pad=20, weight='heavy')
 plt.tight_layout()
 plt.show()

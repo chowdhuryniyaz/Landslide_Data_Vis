@@ -9,6 +9,8 @@ pd.set_option('display.max_columns', 13)
 df = load(path)
 df = changeDataType(df)
 
+print(df['injuries'].describe())
+
 fig, ax = plt.subplots()
 plt.boxplot(df['injuries'])
 ax.set_ylabel('Injuries')

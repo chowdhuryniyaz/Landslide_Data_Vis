@@ -11,7 +11,7 @@ def load(file_path):
 
     df = pd.read_csv(file_path, index_col = 0 , names = column_names, skiprows = 1)
 
-    to_drop = ['time', 'continent_code', 'latitude', 'longitude', 'geolocation', 'type_of_hazard', 'storm_name', 'source_name', 'source_link']
+    to_drop = ['time', 'latitude', 'longitude', 'geolocation', 'type_of_hazard', 'storm_name', 'source_name', 'source_link']
 
     df = dropColumn(df, to_drop)
 
